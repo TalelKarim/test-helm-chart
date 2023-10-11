@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bgworker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: bgworker
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: bgworker 
+    spec:    
+      containers:
+        - name: bgworker 
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.api.ports.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: api-config-map
+          command: ["./bin/worker"]  

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: api  
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: api 
+    spec:
+      containers:
+        - name: api  
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.api.ports.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: api-config-map
+                
+          command: ["./bin/takeoff"]

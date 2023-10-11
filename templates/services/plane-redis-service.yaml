@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: planeredis-service
+spec:
+  selector:
+    component: planeRedis
+  ports:
+    - protocol: TCP
+      port: {{ .Values.planeRedis.ports.port }}
+      targetPort: {{ .Values.planeRedis.ports.targetPort }}
+  type: ClusterIP

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: web
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: web
+    spec:
+      containers:
+        - name: web
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          ports:
+             - containerPort: {{ .Values.web.ports.targetPort }}
+          env:
+            - name: NEXT_PUBLIC_ENABLE_OAUTH
+              value: "{{ .Values.web.env.NEXT_PUBLIC_ENABLE_OAUTH }}"
+            - name: NEXT_PUBLIC_DEPLOY_URL
+              value: "{{ .Values.web.env.NEXT_PUBLIC_DEPLOY_URL }}"   
+          command: ["/usr/local/bin/start.sh"]
+          args: ["web/server.js", "web"]

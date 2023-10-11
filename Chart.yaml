@@ -1,0 +1,5 @@
+# multi-service/Chart.yaml
+apiVersion: v2
+name: "plane-helm-chart"
+version: 0.1.0
+description: A Helm chart for your multi-service application

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: proxy
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: proxy
+    spec:
+      containers:
+        - name: proxy
+          image: "{{ .Values.proxy.image.repository }}:{{ .Values.proxy.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.proxy.ports.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: global-config-map
+          env:
+            - name: FILE_SIZE_LIMIT
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config-map
+                  key: FILE_SIZE_LIMIT
+
+            - name: BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config-map
+                  key: AWS_S3_BUCKET_NAME      

@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: planeMinio
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: planeMinio
+    spec:
+      containers:
+        - name: plane-minio
+          image: "{{ .Values.planeMinio.image.repository }}:{{ .Values.planeMinio.image.tag }}"
+          command: 
+                  - "server"
+                  - "/export"
+                  - "--console-address"
+                  - ":9090"
+          ports:
+            - containerPort: {{ .Values.planeMinio.ports.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: global-config-map  
+          env:
+            - name:  MINIO_ROOT_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config-map
+                  key: FILE_SIZE_LIMIT
+
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: global-config-map
+                  key: AWS_SECRET_ACCESS_KEY 
+          volumeMounts:
+            - name: minio-data
+              mountPath: /export          
+      volumes:
+        - name: minio-data
+          persistentVolumeClaim:
+            claimName: minio-pvc           
+
+

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: createbuckets-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: createbuckets
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: createbuckets
+    spec:
+      containers:
+        - name: createbuckets
+          image: "{{ .Values.createbuckets.image.repository }}:{{ .Values.createbuckets.image.tag }}"
+          envFrom:
+            - configMapRef:
+                name: global-config-map
+          command: ["/bin/sh"]
+          args: ["-c", "/usr/bin/mc config host add planeMinio http://planeMinio:9000 $AWS_ACCESS_KEY_ID $AWS_SECRET_ACCESS_KEY; /usr/bin/mc mb planeMinio/$AWS_S3_BUCKET_NAME; /usr/bin/mc anonymous set download planeMinio/$AWS_S3_BUCKET_NAME; exit 0;"]

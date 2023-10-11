@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: space-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: space
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: space
+    spec:
+      containers:
+        - name: space
+          image: "{{ .Values.space.image.repository }}:{{ .Values.space.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.space.ports.targetPort }}
+          env:
+            - name: NEXT_PUBLIC_ENABLE_OAUTH
+              value: "0"
+          command: ["/usr/local/bin/start.sh"]
+          args: ["space/server.js", "space"]    

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: planeRedis
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: planeRedis
+    spec:
+      containers:
+        - name: planeredis
+          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.planeRedis.ports.targetPort }}
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+              
+      volumes:
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-pvc 

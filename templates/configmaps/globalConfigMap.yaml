@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: global-config-map
+data:
+  PGUSER: "plane"
+  PGPASSWORD: "plane"
+  PGHOST: "planeDb"
+  PGDATABASE: "plane"
+  DATABASE_URL: "postgresql://plane:plane@planeDb/plane"
+  REDIS_HOST: "planeRedis"
+  REDIS_PORT: "6379"
+  REDIS_URL: "redis://planeRedis:6379/"
+  AWS_REGION: ""
+  AWS_ACCESS_KEY_ID: "access-key"
+  AWS_SECRET_ACCESS_KEY: "secret-key"
+  AWS_S3_ENDPOINT_URL: "http://planeMinio:9000"
+  AWS_S3_BUCKET_NAME: "uploads"
+  FILE_SIZE_LIMIT: "5242880"
+  OPENAI_API_BASE: "https://api.openai.com/v1"
+  OPENAI_API_KEY: "sk-"
+  GPT_ENGINE: "gpt-3.5-turbo"
+  DOCKERIZED: "1"
+  USE_MINIO: "1"
+  NGINX_PORT: "80"

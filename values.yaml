@@ -1,0 +1,90 @@
+# deployments/values.yaml
+web:
+  replicas: 1
+  image:
+    repository: "makeplane/plane-frontend" 
+    tag: "latest"
+  ports:
+      port: 3000
+      targetPort: 3000
+  env:
+    NEXT_PUBLIC_ENABLE_OAUTH: "0"
+    NEXT_PUBLIC_DEPLOY_URL: "http://localhost/spaces"
+
+
+space:
+  replicas: 1
+  image:
+    repository: "makeplane/plane-space" 
+    tag: "latest" 
+  ports:
+      port: 4000
+      targetPort: 3000
+  env:
+    NEXT_PUBLIC_ENABLE_OAUTH: "0"    
+
+
+api:
+  replicas: 1
+  image:
+    repository: "makeplane/plane-backend" 
+    tag: "latest" 
+  ports:
+      port: 8000
+      targetPort: 8000
+
+
+planeDb:
+  replicas: 1
+  ports:
+      port: 5432
+      targetPort: 5432
+  image:
+    repository: "postgres:15.2-alpine" 
+    tag: "latest" 
+  env:
+         POSTGRES_USER:  "plane"
+         POSTGRES_DB: "plane"
+         POSTGRES_PASSWORD:  "plane"
+         PGDATA: /var/lib/postgresql/data
+
+planeRedis:
+  replicas: 1
+  ports:
+      port: 6379
+      targetPort: 6379
+  image:
+    repository: "redis:6.2.7-alpine" 
+    tag: "latest" 
+
+planeMinio:
+  replicas: 1
+  ports:
+      port: 9000
+      targetPort: 9000
+  image:
+    repository: "minio/minio" 
+    tag: "latest" 
+
+             
+
+createbuckets:
+  replicas: 1
+  image:
+    repository: "minio/mc" 
+    tag: "latest"
+  ports:
+      port: 9000
+      targetPort: 9000
+  
+  
+proxy:
+  replicas: 1
+  image:
+    repository: "makeplane/plane-proxy" 
+    tag: "latest"
+  ports:
+      port: 80
+      targetPort: 80
+      nodePort: 30007
+  

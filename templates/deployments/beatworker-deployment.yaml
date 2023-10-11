@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: beatworker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev
+      component: beatworker
+  template:
+    metadata:
+      labels:
+        app: dev
+        component: beatworker 
+    spec:
+      containers:
+        - name: beatworker 
+          image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+          ports:
+            - containerPort: {{ .Values.api.ports.targetPort }}
+          envFrom:
+            - configMapRef:
+                name: api-config-map
+          command: ["./bin/beat"]      
