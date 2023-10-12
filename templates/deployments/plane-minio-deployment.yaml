@@ -18,6 +18,7 @@ spec:
         - name: plane-minio
           image: "{{ .Values.planeMinio.image.repository }}"
           command: 
+                  - "minio"
                   - "server"
                   - "/export"
                   - "--console-address"

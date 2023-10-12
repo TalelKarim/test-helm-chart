@@ -4,7 +4,7 @@ metadata:
   name: planedb-service
 spec:
   selector:
-    component: planeDb
+    component: plane-db
   ports:
     - protocol: TCP
       port: {{ .Values.planeDb.ports.port }}

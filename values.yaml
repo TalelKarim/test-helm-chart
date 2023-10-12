@@ -80,7 +80,7 @@ createbuckets:
 proxy:
   replicas: 1
   image:
-    repository: "makeplane/plane-proxy" 
+    repository: "talelch/plane" 
     tag: "latest"
   ports:
       port: 80
