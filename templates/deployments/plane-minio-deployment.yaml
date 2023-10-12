@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: plane-minio
-          image: "{{ .Values.planeMinio.image.repository }}:{{ .Values.planeMinio.image.tag }}"
+          image: "{{ .Values.planeMinio.image.repository }}"
           command: 
                   - "server"
                   - "/export"

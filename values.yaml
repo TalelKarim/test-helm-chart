@@ -55,7 +55,6 @@ planeRedis:
       targetPort: 6379
   image:
     repository: "redis:6.2.7-alpine" 
-    tag: "latest" 
 
 planeMinio:
   replicas: 1

@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psql-pod
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: psql
+  template:
+    metadata:
+      labels:
+        app: psql
+    spec:
+      containers:
+      - name: psql-container
+        image: ubuntu:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - apt install postgresql-client 

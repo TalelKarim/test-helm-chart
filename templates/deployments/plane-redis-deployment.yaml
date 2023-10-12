@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: planeredis
-          image: "{{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}"
+          image: "{{ .Values.planeRedis.image.repository }}"
           ports:
             - containerPort: {{ .Values.planeRedis.ports.targetPort }}
           volumeMounts:
