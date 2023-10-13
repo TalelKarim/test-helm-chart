@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-deployment
+  name: redis-statefulset
 spec:
   replicas: 1
   selector:
@@ -15,7 +15,7 @@ spec:
         component: planeRedis
     spec:
       containers:
-        - name: planeredis
+        - name: plane-redis
           image: "{{ .Values.planeRedis.image.repository }}"
           ports:
             - containerPort: {{ .Values.planeRedis.ports.targetPort }}
