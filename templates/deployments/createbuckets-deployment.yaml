@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: createbuckets-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.createbuckets.replicas }}
   selector:
     matchLabels:
       app: dev

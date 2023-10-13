@@ -3,7 +3,7 @@ kind: StatefulSet
 metadata:
   name: db-statefulset
 spec:
-  replicas: 1
+  replicas: {{ .Values.planeDb.replicas }}
   selector:
     matchLabels:
       app: dev

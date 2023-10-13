@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: proxy-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.proxy.replicas }}
   selector:
     matchLabels:
       app: dev

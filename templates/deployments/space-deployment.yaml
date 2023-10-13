@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: space-deployment
 spec:
-  replicas: 1
+  replicas: {{ .Values.space.image.replicas}}
   selector:
     matchLabels:
       app: dev
